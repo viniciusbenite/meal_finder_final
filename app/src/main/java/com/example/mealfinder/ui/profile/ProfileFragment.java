@@ -1,11 +1,15 @@
 package com.example.mealfinder.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.mealfinder.LoginActivity;
 import com.example.mealfinder.R;
 
 import androidx.annotation.NonNull;
@@ -15,7 +19,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 public class ProfileFragment extends Fragment {
-
+    Button diets_choosed;
+    Button log_out;
     private ProfileViewModel profileViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -23,8 +28,7 @@ public class ProfileFragment extends Fragment {
         profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_profile);
-        final TextView textView1=root.findViewById(R.id.textView2);
+        log_out=root.findViewById(R.id.log_out);
         /*
         profileViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -33,8 +37,14 @@ public class ProfileFragment extends Fragment {
             }
         });
         */
-        textView.setText("Dietas Seguidas");
-        textView1.setText("Editar Perfil");
+        log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
     }
 }
