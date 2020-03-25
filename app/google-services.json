@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "584355222574",
+    "firebase_url": "https://mealfinder-39b8f.firebaseio.com",
+    "project_id": "mealfinder-39b8f",
+    "storage_bucket": "mealfinder-39b8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584355222574:android:17ddce88f3ec0d180a7bbf",
+        "android_client_info": {
+          "package_name": "com.example.mealfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584355222574-gspj60fc5vcqfaq47ig9431asgd6on3f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mealfinder",
+            "certificate_hash": "254bb2e96758a9e3d8bc78e56ec768bb4789ec6d"
+          }
+        },
+        {
+          "client_id": "584355222574-9r41ue9ouojm0d4no69dt87od87qmbil.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDukwfA3y4K8fQd4nW1S73qA7D4L3ik2wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584355222574-9r41ue9ouojm0d4no69dt87od87qmbil.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
