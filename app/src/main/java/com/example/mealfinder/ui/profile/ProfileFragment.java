@@ -68,7 +68,6 @@ public class ProfileFragment extends Fragment {
                 Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 mUsername = ANONYMOUS;
                 */
-
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
             }

@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_near"
-        android:name="com.example.mealfinder.ui.near.NearFragment"
-        android:label="Near Me"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_food_logs"
+        android:name="com.example.mealfinder.ui.food_log.FoodLogFragment"
+        android:label="Food Logs"
+        tools:layout="@layout/fragment_food_log" />
 
     <fragment
         android:id="@+id/navigation_favorites"

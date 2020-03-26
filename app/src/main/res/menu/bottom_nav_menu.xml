@@ -8,9 +8,9 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_near"
-        android:icon="@drawable/ic_near"
-        android:title="Near Me" />
+        android:id="@+id/navigation_food_logs"
+        android:icon="@drawable/ic_food_log"
+        android:title="Food log" />
 
     <item
         android:id="@+id/navigation_favorites"
