@@ -15,7 +15,12 @@
         android:id="@+id/navigation_food_logs"
         android:name="com.example.mealfinder.ui.food_log.FoodLogFragment"
         android:label="Food Logs"
-        tools:layout="@layout/fragment_food_log" />
+        tools:layout="@layout/fragment_food_log">
+
+        <action
+            android:id="@+id/add_new_log"
+            app:destination="@+id/navigation_add_log"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorites"
@@ -28,4 +33,16 @@
         android:name="com.example.mealfinder.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/navigation_add_log"
+        android:name="com.example.mealfinder.ui.add_log.AddLogFragment"
+        android:label="New Food Log"
+        tools:layout="@layout/add_log">
+
+        <action
+            android:id="@+id/new_log_to_logs"
+            app:destination="@+id/navigation_food_logs"/>
+    </fragment>
+
 </navigation>
