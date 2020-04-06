@@ -2,7 +2,13 @@ package com.example.mealfinder.ui.add_log;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +20,26 @@ import android.widget.Toast;
 
 import com.example.mealfinder.R;
 import com.example.mealfinder.model.FoodLog;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import static android.app.Activity.RESULT_OK;
+
 
 public class AddLogFragment extends Fragment {
     TextView log_name;
@@ -34,8 +50,12 @@ public class AddLogFragment extends Fragment {
     ImageView chooseImage;
     Calendar myCalendar;
     View view;
-    private static final int REQUEST_IMAGE = 2;
+    private static final int ImageBack = 1;
     private FirebaseFirestore mFirestore;
+    private StorageReference folder;
+    private Uri imageData;
+    private String picture;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.add_log, container, false);
@@ -46,9 +66,11 @@ public class AddLogFragment extends Fragment {
         cancel=view.findViewById(R.id.buttonCancel);
         chooseImage=view.findViewById(R.id.choose_photo);
         myCalendar = Calendar.getInstance();
+        folder= FirebaseStorage.getInstance().getReference().child("ImageFolder");
         FirebaseFirestore.setLoggingEnabled(true);
         initFirestore();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -77,7 +99,6 @@ public class AddLogFragment extends Fragment {
                 //SEND TO FIREBASE
 
                 String logName=log_name.getText().toString();
-                String picture="";
                 String mealName=meal_name.getText().toString();
                 String date=date_log.getText().toString();
                 onSubmitClicked(new FoodLog(logName, picture, mealName, date));
@@ -88,10 +109,10 @@ public class AddLogFragment extends Fragment {
         chooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
-                startActivityForResult(intent, REQUEST_IMAGE);
+                startActivityForResult(intent, ImageBack);
 
             }
         });
@@ -112,6 +133,36 @@ public class AddLogFragment extends Fragment {
         CollectionReference food_logs = mFirestore.collection("food_logs");
         food_logs.add(foodLog);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        if (requestCode == ImageBack){
+            if (resultCode == RESULT_OK){
+                imageData=data.getData();
+                final StorageReference imageName=folder.child("image"+imageData.getLastPathSegment());
+                imageName.putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                picture=String.valueOf(uri);
+                            }
+                        });
+                    }
+                });
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                Cursor cursor = getContext().getContentResolver().query(imageData,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+                Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+                chooseImage.setImageBitmap(bitmap);
+            }
+        }
     }
 
 }
