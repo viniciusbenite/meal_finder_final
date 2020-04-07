@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onItemClick(int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString("event_id", restaurantList.get(position).getRestaurantInfo().getId());
+                bundle.putString("res_id", restaurantList.get(position).getRestaurantInfo().getId());
                 NavHostFragment.findNavController(HomeFragment.this).navigate(R.id.feed_to_restaurant_details,bundle);
             }
 
