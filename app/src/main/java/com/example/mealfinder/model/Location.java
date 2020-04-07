@@ -17,4 +17,11 @@ public class Location {
     public void setLocality(String locality) {
         this.locality = locality;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "locality='" + locality + '\'' +
+                '}';
+    }
 }
