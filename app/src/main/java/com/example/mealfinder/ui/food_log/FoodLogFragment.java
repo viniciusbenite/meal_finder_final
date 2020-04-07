@@ -18,6 +18,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -69,7 +70,8 @@ public class FoodLogFragment extends Fragment{
     private void initFirestore(){
         food_logs.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-        Query query = rootRef.collection("food_logs")
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Query query = rootRef.collection("users").document(uid).collection("food_logs")
                 .orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<FoodLog> options = new FirestoreRecyclerOptions.Builder<FoodLog>()
                 .setQuery(query, FoodLog.class)

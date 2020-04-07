@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.mealfinder.R;
 import com.example.mealfinder.model.FoodLog;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -129,8 +130,8 @@ public class AddLogFragment extends Fragment {
     }
 
     private void onSubmitClicked(FoodLog foodLog) {
-
-        CollectionReference food_logs = mFirestore.collection("food_logs");
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        CollectionReference food_logs = mFirestore.collection("users").document(uid).collection("food_logs");
         food_logs.add(foodLog);
 
     }
