@@ -6,6 +6,9 @@ public class Location {
     @SerializedName("locality")
     private String locality;
 
+    public Location(){
+
+    }
     public Location(String locality) {
         this.locality = locality;
     }

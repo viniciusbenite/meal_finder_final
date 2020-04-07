@@ -68,7 +68,6 @@ public class FoodLogFragment extends Fragment{
     }
 
     private void initFirestore(){
-        food_logs.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Query query = rootRef.collection("users").document(uid).collection("food_logs")

@@ -16,6 +16,10 @@ public class RestaurantInfo {
     @SerializedName("thumb")
     private String thumb;
 
+    public RestaurantInfo(){
+
+    }
+
     public RestaurantInfo(String id, String name, Location location, String thumb) {
         this.id = id;
         this.name = name;
