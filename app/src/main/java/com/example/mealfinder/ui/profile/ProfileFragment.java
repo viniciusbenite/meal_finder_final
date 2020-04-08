@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.example.mealfinder.MainActivity.ANONYMOUS;
@@ -50,14 +51,15 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         log_out=root.findViewById(R.id.log_out);
         profile_image=root.findViewById(R.id.profile_image);
-        /*
-        profileViewModel.getText().observe(this, new Observer<String>() {
+        diets_choosed=root.findViewById(R.id.diets_choosed);
+
+        diets_choosed.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View v) {
+                //go to see diets saved in firestore
+                NavHostFragment.findNavController(ProfileFragment.this).navigate(R.id.profile_to_diets_choosed);
             }
         });
-        */
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mUsername = mFirebaseUser.getDisplayName();

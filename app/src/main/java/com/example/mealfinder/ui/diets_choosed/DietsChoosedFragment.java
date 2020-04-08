@@ -1,14 +1,13 @@
-package com.example.mealfinder.ui.favorites;
+package com.example.mealfinder.ui.diets_choosed;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mealfinder.R;
-import com.example.mealfinder.adapter.FavoritesAdapter;
-import com.example.mealfinder.model.RestaurantInfo;
+import com.example.mealfinder.adapter.DietsAdapter;
+import com.example.mealfinder.model.Diet;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,36 +18,34 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FavoritesFragment extends Fragment {
+public class DietsChoosedFragment extends Fragment {
 
     View root;
     private FirebaseFirestore mFirestore;
-    private FavoritesAdapter adapter;
-    RecyclerView favorites_recycler_view;
+    private DietsAdapter adapter;
+    RecyclerView diets_recycler_view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_favorites, container, false);
-        favorites_recycler_view=root.findViewById(R.id.favorites_recycler_view);
-        getFavoriteRestaurants();
+
+        root = inflater.inflate(R.layout.fragment_diets_choosed, container, false);
+        diets_recycler_view=root.findViewById(R.id.diets_recycler_view);
+        initFirestore();
 
         return root;
     }
 
-
-    private void getFavoriteRestaurants(){
+    private void initFirestore(){
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Query query = rootRef.collection("users").document(uid).collection("favorite_restaurants");
-
-        FirestoreRecyclerOptions<RestaurantInfo> options = new FirestoreRecyclerOptions.Builder<RestaurantInfo>()
-                .setQuery(query, RestaurantInfo.class)
+        Query query = rootRef.collection("users").document(uid).collection("diets");
+        FirestoreRecyclerOptions<Diet> options = new FirestoreRecyclerOptions.Builder<Diet>()
+                .setQuery(query, Diet.class)
                 .build();
-        adapter= new FavoritesAdapter(options, getContext());
+        adapter= new DietsAdapter(options, getContext());
         adapter.notifyDataSetChanged();
-        favorites_recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
-        favorites_recycler_view.setAdapter(adapter);
-
+        diets_recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
+        diets_recycler_view.setAdapter(adapter);
     }
 
     @Override

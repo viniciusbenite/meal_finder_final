@@ -3,7 +3,9 @@ package com.example.mealfinder;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +37,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
-    private static boolean first=false;
+    private SharedPreferences mPreferences;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     String mUsername;
@@ -56,10 +58,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        if (first) {
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean firstTime = mPreferences.getBoolean("firstTime", true);
+        Log.d("firstTime", ""+firstTime);
+        if (firstTime) {
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putBoolean("firstTime", false);
+            editor.apply();
             startActivity(new Intent(this, FirstTimeUsers.class));
-            first=false;
         }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();

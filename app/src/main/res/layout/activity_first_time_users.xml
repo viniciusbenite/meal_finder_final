@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -197,13 +198,12 @@
         android:gravity="center"
         android:layout_height="0dp">
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/submit"
         android:background="@drawable/button_shape_first_time_users"
         android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:onClick="go_to_main"
         android:text="Submit"
          />
     </RelativeLayout>

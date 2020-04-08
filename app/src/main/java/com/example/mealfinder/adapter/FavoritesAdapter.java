@@ -40,6 +40,7 @@ public class FavoritesAdapter extends FirestoreRecyclerAdapter<RestaurantInfo, F
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
+
     static class FavoritesViewHolder extends RecyclerView.ViewHolder{
 
         public final View mView;

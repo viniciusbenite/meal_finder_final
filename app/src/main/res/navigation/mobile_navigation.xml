@@ -41,7 +41,12 @@
         android:id="@+id/navigation_profile"
         android:name="com.example.mealfinder.ui.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/profile_to_diets_choosed"
+            app:destination="@+id/navigation_diets_choosed"/>
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_add_log"
@@ -53,5 +58,11 @@
             android:id="@+id/new_log_to_logs"
             app:destination="@+id/navigation_food_logs"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_diets_choosed"
+        android:name="com.example.mealfinder.ui.diets_choosed.DietsChoosedFragment"
+        android:label="Diets Choosed"
+        tools:layout="@layout/fragment_diets_choosed"/>
 
 </navigation>
