@@ -35,7 +35,11 @@
         android:id="@+id/navigation_favorites"
         android:name="com.example.mealfinder.ui.favorites.FavoritesFragment"
         android:label="Favorites"
-        tools:layout="@layout/fragment_favorites"/>
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/favorites_to_restaurant_details"
+            app:destination="@+id/navigation_restaurant_details"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"

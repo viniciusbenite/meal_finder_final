@@ -32,6 +32,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.example.mealfinder.MainActivity.ANONYMOUS;
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class ProfileFragment extends Fragment {
     private GoogleApiClient mGoogleApiClient;
@@ -52,6 +53,11 @@ public class ProfileFragment extends Fragment {
         log_out=root.findViewById(R.id.log_out);
         profile_image=root.findViewById(R.id.profile_image);
         diets_choosed=root.findViewById(R.id.diets_choosed);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext()) //Use app context to prevent leaks using activity
+                //.enableAutoManage(this /* FragmentActivity */, connectionFailedListener)
+                .addApi(Auth.GOOGLE_SIGN_IN_API)
+                .build();
 
         diets_choosed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +78,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //mFirebaseAuth.signOut();
-                //Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-             //   mUsername = ANONYMOUS;
-              //  getActivity().finish();
+                signOut();
+                getActivity().finish();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
             }
@@ -84,5 +88,26 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    private void signOut() {
+        if (mGoogleApiClient.isConnected()) {
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+            mGoogleApiClient.disconnect();
+            mGoogleApiClient.connect();
+        }
+    }
 
 }

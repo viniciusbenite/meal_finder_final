@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment{
     }
 
     private void getRestaurants(){
+        //TODO get Restaurants based on diets of user and his location
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<RestaurantList> getRestaurants=service.getRestaurants(10, 40.64427, 8.64554, "308", "rating", "desc");
         getRestaurants.enqueue(new Callback<RestaurantList>() {

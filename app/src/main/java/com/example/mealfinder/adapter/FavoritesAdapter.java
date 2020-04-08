@@ -19,9 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class FavoritesAdapter extends FirestoreRecyclerAdapter<RestaurantInfo, FavoritesAdapter.FavoritesViewHolder> {
 
     private Context context;
+    private OnItemClickListener mListener;
     public FavoritesAdapter(@NonNull FirestoreRecyclerOptions<RestaurantInfo> options, Context context) {
         super(options);
         this.context=context;
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener=listener;
     }
 
     @Override
@@ -34,7 +43,7 @@ public class FavoritesAdapter extends FirestoreRecyclerAdapter<RestaurantInfo, F
     public FavoritesViewHolder onCreateViewHolder(ViewGroup group, int i) {
         View view = LayoutInflater.from(group.getContext())
                 .inflate(R.layout.restaurant_favorites, group, false);
-        return new FavoritesViewHolder(view);
+        return new FavoritesViewHolder(view, mListener);
     }
     public void deleteItem(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
@@ -49,13 +58,25 @@ public class FavoritesAdapter extends FirestoreRecyclerAdapter<RestaurantInfo, F
         TextView restaurantName;
         TextView restaurantLocation;
 
-        FavoritesViewHolder(View itemView) {
+        FavoritesViewHolder(View itemView, final OnItemClickListener listener) {
 
             super(itemView);
             mView=itemView;
             restaurantImage=mView.findViewById(R.id.Restaurant_Image_Favorites);
             restaurantName=mView.findViewById(R.id.Restaurant_Name_Favorites);
             restaurantLocation=mView.findViewById(R.id.Restaurant_Location_Favorites);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener !=null){
+                        int position=getAdapterPosition();
+                        if (position !=RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

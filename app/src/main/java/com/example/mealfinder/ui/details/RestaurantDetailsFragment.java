@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.mealfinder.MainActivity;
 import com.example.mealfinder.R;
 import com.example.mealfinder.model.RestaurantInfo;
 import com.example.mealfinder.network.GetDataService;
@@ -63,6 +64,7 @@ public class RestaurantDetailsFragment extends Fragment {
     }
 
     private void putData(RestaurantInfo restInfo){
+        ((MainActivity) getActivity()).setActionBarTitle(restInfo.getName());
         Glide.with(getContext()).load(restInfo.getThumb()).into(restaurantImage);
         restaurantName.setText(restInfo.getName());
         restaurantLocation.setText(restInfo.getLocation().getLocality());

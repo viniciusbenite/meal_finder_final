@@ -16,6 +16,8 @@ import com.google.firebase.firestore.Query;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,6 +50,27 @@ public class FavoritesFragment extends Fragment {
         adapter.notifyDataSetChanged();
         favorites_recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
         favorites_recycler_view.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new FavoritesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("res_id", adapter.getItem(position).getId());
+                NavHostFragment.findNavController(FavoritesFragment.this).navigate(R.id.favorites_to_restaurant_details,bundle);
+            }
+        });
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.deleteItem(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(favorites_recycler_view);
 
     }
 
