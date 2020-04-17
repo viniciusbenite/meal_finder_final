@@ -1,35 +1,9 @@
 package com.example.mealfinder.ui.food_log;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.example.mealfinder.R;
-import com.example.mealfinder.adapter.FoodLogAdapter;
-import com.example.mealfinder.model.FoodLog;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.lang.ref.Reference;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -37,24 +11,30 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+import com.example.mealfinder.R;
+import com.example.mealfinder.adapter.FoodLogAdapter;
+import com.example.mealfinder.model.FoodLog;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
-public class FoodLogFragment extends Fragment{
+public class FoodLogFragment extends Fragment {
+    private static final String TAG = "PrefsFragment";
     RecyclerView food_logs;
     FloatingActionButton addLog;
     private FirebaseFirestore mFirestore;
     private FoodLogAdapter adapter;
 
-    private static final String TAG = "PrefsFragment";
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_food_log, container, false);
-        food_logs=root.findViewById(R.id.recycler_view_logs);
+        food_logs = root.findViewById(R.id.recycler_view_logs);
         initFirestore();
 
-        addLog=root.findViewById(R.id.addLog);
+        addLog = root.findViewById(R.id.addLog);
         addLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +47,7 @@ public class FoodLogFragment extends Fragment{
         return root;
     }
 
-    private void initFirestore(){
+    private void initFirestore() {
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Query query = rootRef.collection("users").document(uid).collection("food_logs")
@@ -76,7 +56,7 @@ public class FoodLogFragment extends Fragment{
                 .setQuery(query, FoodLog.class)
                 .build();
 
-        adapter= new FoodLogAdapter(options, getContext());
+        adapter = new FoodLogAdapter(options, getContext());
         adapter.notifyDataSetChanged();
         food_logs.setLayoutManager(new LinearLayoutManager(getContext()));
         food_logs.setAdapter(adapter);
@@ -92,8 +72,7 @@ public class FoodLogFragment extends Fragment{
                 adapter.deleteItem(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(food_logs);
-}
-
+    }
 
 
     @Override
