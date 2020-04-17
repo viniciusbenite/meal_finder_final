@@ -55,6 +55,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.List;
 import java.util.Objects;
@@ -80,7 +81,7 @@ public class HomeFragment extends Fragment {
 //        getRestaurants(lat, lon);
         requestLocationPermission();
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         return root;
     }
@@ -116,8 +117,8 @@ public class HomeFragment extends Fragment {
 }
 
     private void generateFeed(final List<Restaurant> restaurantList){
-        RecyclerView recyclerView = root.findViewById(R.id.feed_recycler_view);
-        FeedAdapter adapter = new FeedAdapter(getContext(), restaurantList);
+        final RecyclerView recyclerView = root.findViewById(R.id.feed_recycler_view);
+        final FeedAdapter adapter = new FeedAdapter(getContext(), restaurantList);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -132,11 +133,12 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFavoriteClick(int position) {
-                Toast.makeText(getContext(), "adding to Favorites", Toast.LENGTH_SHORT).show();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 CollectionReference favorite_restaurants = mFirestore.collection("users").document(uid).collection("favorite_restaurants");
                 favorite_restaurants.add(restaurantList.get(position).getRestaurantInfo());
-            }
+                recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.add_to_favorites).setBackgroundResource(R.drawable.ic_favorite_feed);
+             }
+
         });
     }
     private void initFirestore() {
@@ -146,7 +148,7 @@ public class HomeFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean locationEnabled () {
         LocationManager lm = (LocationManager)
-                Objects.requireNonNull(getActivity()).getSystemService(Context. LOCATION_SERVICE ) ;
+               getActivity().getSystemService(Context. LOCATION_SERVICE ) ;
         boolean gps_enabled = false;
         boolean network_enabled = false;
         try {
@@ -183,7 +185,7 @@ public class HomeFragment extends Fragment {
         Log.e("Permission", Manifest.permission.ACCESS_FINE_LOCATION);
         if (locationEnabled()) {
             Log.e("location", "enabled");
-            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 Log.e("bla", "blabla");
                 requestPermissions(new String[]{
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -199,7 +201,7 @@ public class HomeFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean checkPermissions() {
-        return ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -237,7 +239,7 @@ public class HomeFragment extends Fragment {
         mLocationRequest.setFastestInterval(0);
         mLocationRequest.setNumUpdates(1);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mFusedLocationClient.requestLocationUpdates(
                 mLocationRequest, mLocationCallback,
                 Looper.myLooper()
@@ -248,6 +250,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             android.location.Location mLastLocation = locationResult.getLastLocation();
+            Log.d("latitude", ""+mLastLocation.getLatitude()+ ", "+mLastLocation.getLongitude());
             getRestaurants(mLastLocation.getLatitude(),  mLastLocation.getLongitude());
         }
     };
