@@ -13,5 +13,6 @@
     <string name="paleo">Paleo</string>
     <string name="submit">Submit</string>
     <string name="sign_in">Sign In</string>
+    <string name="welcome_message">Welcome to the App! Choose your diets!</string>
 
 </resources>

@@ -1,55 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="150dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
         android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Profile picture"
         app:civ_border_color="#FFFFFF"
-        app:civ_border_width="2dp"
-        android:contentDescription="Profile picture" />
+        app:civ_border_width="2dp" />
 
     <Button
         android:id="@+id/diets_choosed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#FFFFFF"
-        android:text="Diets Choosed"
-        android:textAlignment="viewStart" />
+        style="@style/profileButtonStyle"
+        android:text="Diets Choosed" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Settings"
-        android:textAlignment="viewStart" />
+        style="@style/profileButtonStyle"
+        android:text="Settings" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Help"
-        android:textAlignment="viewStart" />
+        style="@style/profileButtonStyle"
+        android:text="Help" />
+
     <Button
         android:id="@+id/log_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Log out"
-        android:textAlignment="viewStart" />
+        style="@style/profileButtonStyle"
+        android:text="Log out" />
 </LinearLayout>
