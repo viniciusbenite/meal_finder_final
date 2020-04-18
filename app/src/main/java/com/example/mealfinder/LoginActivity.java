@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (task.isSuccessful()) {
                 // Google Sign-In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult();
-                firebaseAuthWithGoogle(Objects.requireNonNull(account));
+                firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign-In failed
                 Log.e(TAG, "Google Sign-In failed.");

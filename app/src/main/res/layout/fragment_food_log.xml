@@ -16,6 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:backgroundTint="#4285F4"
-        android:src="@android:drawable/ic_menu_add" />
+        android:src="@drawable/ic_add_log" />
 
 </FrameLayout>

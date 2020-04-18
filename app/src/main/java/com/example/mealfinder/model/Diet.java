@@ -1,5 +1,7 @@
 package com.example.mealfinder.model;
 
+import java.util.Objects;
+
 public class Diet {
 
     private String diet;
@@ -19,4 +21,11 @@ public class Diet {
     public void setDiet(String diet) {
         this.diet = diet;
     }
+
+    @Override
+    public String toString() {
+        return diet;
+
+    }
+
 }
