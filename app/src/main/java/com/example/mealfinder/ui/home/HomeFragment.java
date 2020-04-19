@@ -39,10 +39,13 @@ import retrofit2.Response;
 import com.example.mealfinder.R;
 import com.example.mealfinder.adapter.FeedAdapter;
 //import com.example.mealfinder.model.Location;
+import com.example.mealfinder.model.Diet;
 import com.example.mealfinder.model.Restaurant;
 import com.example.mealfinder.model.RestaurantList;
 import com.example.mealfinder.network.GetDataService;
 import com.example.mealfinder.network.RetrofitClientInstance;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -50,13 +53,17 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,6 +75,7 @@ public class HomeFragment extends Fragment {
     private ListView listView;
     View root;
     private FirebaseFirestore mFirestore;
+    List<Diet> dietsReceived= new ArrayList<>();
 //    private double lat, lon;
 
     private FusedLocationProviderClient mFusedLocationClient;
@@ -79,20 +87,42 @@ public class HomeFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_home, container, false);
         initFirestore();
 //        getRestaurants(lat, lon);
+        getDiets();
         requestLocationPermission();
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         return root;
     }
 
+    private void getDiets(){
+        String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
+        Query query = rootRef.collection("users").document(uid).collection("diets");
+        Source source = Source.CACHE;
+        query.get(source).addOnSuccessListener(documentSnapshots -> {
+            if (documentSnapshots.isEmpty()) {
+                Log.d("empty", "onSuccess: LIST EMPTY");
+                return;
+            } else {
+                List<Diet> diets = documentSnapshots.toObjects(Diet.class);
+                dietsReceived.addAll(diets);
+            }
+        });
+    }
     private void getRestaurants(double lat, double lon){
         //TODO get Restaurants based on diets of user and his location
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//        Call<RestaurantList> getRestaurants=service.getRestaurants(10, 40.64427, 8.64554, "308", "rating", "desc");
+
         Log.e("Latitude: ", Double.toString(lat));
         Log.e("Longitude", Double.toString(lon));
-        Call<RestaurantList> getRestaurants=service.getRestaurants(10, lat, lon, "25", "rating", "desc");
+
+        String keyword="";
+        for (Diet d : dietsReceived)
+            keyword+=d.toString()+" ";
+        Log.d("keyword", keyword);
+        Call<RestaurantList> getRestaurants=service.getRestaurants(keyword,10, 40.64427, -8.64554,"rating", "desc");
+        dietsReceived.clear();
         getRestaurants.enqueue(new Callback<RestaurantList>() {
             @Override
             public void onResponse(Call<RestaurantList> call, Response<RestaurantList> response) {
@@ -254,4 +284,6 @@ public class HomeFragment extends Fragment {
             getRestaurants(mLastLocation.getLatitude(),  mLastLocation.getLongitude());
         }
     };
+
+
 }
