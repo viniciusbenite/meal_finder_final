@@ -13,7 +13,7 @@ public interface GetDataService {
 
     @Headers("user-key: 00469c39896ef18cd0fcbe0bf5111171")
     @GET("search")
-    Call<RestaurantList> getRestaurants(@Query("count") int count, @Query("lat") double lat, @Query("lon") double lon, @Query("cuisines") String cuisines,
+    Call<RestaurantList> getRestaurants(@Query("q") String keyword, @Query("count") int count, @Query("lat") double lat, @Query("lon") double lon,
                                         @Query("sort") String sort, @Query("order") String desc);
 
     @Headers("user-key: 00469c39896ef18cd0fcbe0bf5111171")
