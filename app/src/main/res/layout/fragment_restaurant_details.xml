@@ -36,17 +36,5 @@
         android:layout_gravity="center"
          />
 
-    <Button
-        android:id="@+id/addBtn"
-        android:text="Add a review"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="reviews"/>
-
-    <ExpandableListView
-        android:id="@+id/reviewsList"
-        android:layout_width="match_parent"
-        android:layout_height="435dp" />
-
 </LinearLayout>
 </ScrollView>

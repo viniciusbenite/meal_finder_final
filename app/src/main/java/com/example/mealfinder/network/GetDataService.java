@@ -1,5 +1,6 @@
 package com.example.mealfinder.network;
 
+import com.example.mealfinder.model.RestaurantDetails;
 import com.example.mealfinder.model.RestaurantInfo;
 import com.example.mealfinder.model.RestaurantList;
 import com.google.gson.JsonObject;
@@ -18,7 +19,7 @@ public interface GetDataService {
 
     @Headers("user-key: 00469c39896ef18cd0fcbe0bf5111171")
     @GET("restaurant")
-    Call<RestaurantInfo> getRestaurantById(@Query("res_id") int res_id);
+    Call<RestaurantDetails> getRestaurantById(@Query("res_id") int res_id);
 
 
 }

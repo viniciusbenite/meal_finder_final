@@ -6,11 +6,15 @@ public class Location {
     @SerializedName("locality")
     private String locality;
 
+    @SerializedName("address")
+    private String address;
+
     public Location(){
 
     }
-    public Location(String locality) {
+    public Location(String locality, String address) {
         this.locality = locality;
+        this.address=address;
     }
 
     public String getLocality() {
@@ -19,6 +23,14 @@ public class Location {
 
     public void setLocality(String locality) {
         this.locality = locality;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
