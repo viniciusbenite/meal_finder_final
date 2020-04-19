@@ -17,16 +17,47 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:textSize="35sp" />
+        android:textSize="25sp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content">
+    <RatingBar
+        android:id="@+id/restRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:saveEnabled="true"
+        android:numStars="5"/>
+
+        <TextView
+            android:id="@+id/textNoEvaluations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/restaurant_location_details"
         android:layout_width="match_parent"
+        android:drawableStart="@drawable/ic_place"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:textSize="25sp" />
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/restaurant_timings"
+        android:layout_width="match_parent"
+        android:drawableStart="@drawable/ic_timings"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/restaurant_image_details"
@@ -35,6 +66,56 @@
         android:layout_marginTop="16dp"
         android:layout_gravity="center"
          />
+
+    <TextView
+        android:id="@+id/restaurantDetailsText"
+        android:layout_width="match_parent"
+        android:text="Details"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/restaurantAverageCostText"
+        android:layout_width="match_parent"
+        android:text="Average Cost for Two"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/restaurantAverageCost"
+        android:layout_width="match_parent"
+        android:drawableLeft="@drawable/ic_price"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/restaurantCuisinesText"
+        android:layout_width="match_parent"
+        android:text="Cuisines"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/restaurantCuisines"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_food_log"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="14sp" />
 
 </LinearLayout>
 </ScrollView>
