@@ -68,7 +68,6 @@ public class HomeFragment extends Fragment {
     private ListView listView;
     View root;
     private FirebaseFirestore mFirestore;
-//    private double lat, lon;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -211,18 +210,15 @@ public class HomeFragment extends Fragment {
             if (mFusedLocationClient != null) {
                 Log.e("Fused location", "not null");
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(
-                        new OnCompleteListener<Location>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Location> task) {
-                                Location location = task.getResult();
-                                    if (location == null) {
-                                        requestNewLocationData();
-                                    } else {
-                                        getRestaurants(location.getLatitude(), location.getLongitude());
-                                    }
-                            }
+                        task -> {
+                            Location location = task.getResult();
+                                if (location == null) {
+                                    requestNewLocationData();
+                                } else {
+                                    getRestaurants(location.getLatitude(), location.getLongitude());
+                                }
                         }
-                    );
+                );
                 }
             Log.e("fuse", "null");
             requestNewLocationData();
