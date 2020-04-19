@@ -3,6 +3,7 @@ package com.example.mealfinder.ui.home;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -72,6 +73,7 @@ import static androidx.core.content.ContextCompat.getSystemService;
 @RuntimePermissions
 public class HomeFragment extends Fragment {
 
+    ProgressDialog progressDialog;
     private ListView listView;
     View root;
     private FirebaseFirestore mFirestore;
@@ -88,6 +90,9 @@ public class HomeFragment extends Fragment {
         initFirestore();
 //        getRestaurants(lat, lon);
         getDiets();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Fetching restaurants...");
+        progressDialog.show();
         requestLocationPermission();
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
@@ -111,7 +116,7 @@ public class HomeFragment extends Fragment {
         });
     }
     private void getRestaurants(double lat, double lon){
-        //TODO get Restaurants based on diets of user and his location
+
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
         Log.e("Latitude: ", Double.toString(lat));
@@ -126,7 +131,7 @@ public class HomeFragment extends Fragment {
         getRestaurants.enqueue(new Callback<RestaurantList>() {
             @Override
             public void onResponse(Call<RestaurantList> call, Response<RestaurantList> response) {
-
+                progressDialog.dismiss();
                 //put data in adapter
                 assert response.body() != null;
                 for (Restaurant r: response.body().getRestaurantList()) {
