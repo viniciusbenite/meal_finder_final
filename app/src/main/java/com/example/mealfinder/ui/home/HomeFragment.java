@@ -94,7 +94,6 @@ public class HomeFragment extends Fragment {
         progressDialog.setMessage("Fetching restaurants...");
         progressDialog.show();
         requestLocationPermission();
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         return root;
@@ -126,7 +125,7 @@ public class HomeFragment extends Fragment {
         for (Diet d : dietsReceived)
             keyword+=d.toString()+" ";
         Log.d("keyword", keyword);
-        Call<RestaurantList> getRestaurants=service.getRestaurants(keyword,10, 40.64427, -8.64554,"rating", "desc");
+        Call<RestaurantList> getRestaurants=service.getRestaurants(keyword,10, lat, -lon,"rating", "desc");
         dietsReceived.clear();
         getRestaurants.enqueue(new Callback<RestaurantList>() {
             @Override
