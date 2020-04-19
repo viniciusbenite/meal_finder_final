@@ -17,6 +17,7 @@ import com.example.mealfinder.R;
 import com.example.mealfinder.adapter.DietsAdapter;
 import com.example.mealfinder.model.Diet;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.ObservableSnapshotArray;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DietsChoosedFragment extends Fragment {
@@ -32,10 +34,11 @@ public class DietsChoosedFragment extends Fragment {
     RecyclerView diets_recycler_view;
     FloatingActionButton addDiet;
     ArrayList<String> diets_added = new ArrayList<>();
-    Query query;
-    Query query1;
-    Query query2;
-    Query query3;
+    ObservableSnapshotArray dietsReceived;
+    ArrayList<String> dietsReceivedStr= new ArrayList<>();
+    ArrayList<String> dietsNotInReceivedStr= new ArrayList<>();
+    ArrayList<String> allDiets= new ArrayList<String>();
+    ArrayList<String> dietsToShow= new ArrayList<>();
     private FirebaseFirestore mFirestore;
     private DietsAdapter adapter;
 
@@ -45,17 +48,32 @@ public class DietsChoosedFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_diets_choosed, container, false);
         diets_recycler_view = root.findViewById(R.id.diets_recycler_view);
         addDiet = root.findViewById(R.id.addDiet);
-
+        allDiets.add("Vegan");
+        allDiets.add("Vegetarian");
+        allDiets.add("Paleo");
+        allDiets.add("Macrobiotic");
+        initFirestore();
         addDiet.setOnClickListener(view -> {
             //show dialog with diets available
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("Choose your diets");
             mFirestore = FirebaseFirestore.getInstance();
 
-            final String[] diets = {"Vegetarian", "Vegan", "Macrobiotic", "Paleo"};
 
-            boolean[] checkedItems = {false, false, false, false};
-            builder.setMultiChoiceItems(diets, checkedItems, (dialog, which, isChecked) -> {
+            for (Object d: dietsReceived)
+                dietsReceivedStr.add(d.toString());
+
+
+
+            for (String s: allDiets){
+                if (!dietsReceivedStr.contains(s)){
+                    dietsToShow.add(s);
+                }
+            }
+            Log.d("dietstoShow", dietsToShow.toString());
+            final String[] diets = dietsToShow.toArray(new String[dietsToShow.size()]);
+
+            builder.setMultiChoiceItems(diets, null, (dialog, which, isChecked) -> {
                 // The user checked or unchecked a box
                 if (isChecked) {
                     diets_added.add(diets[which]);
@@ -78,10 +96,14 @@ public class DietsChoosedFragment extends Fragment {
                 }
                 dialog.dismiss();
                 diets_added.clear();
+                dietsReceivedStr.clear();
+                dietsToShow.clear();
             });
             builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
                 dialogInterface.dismiss();
                 diets_added.clear();
+                dietsReceivedStr.clear();
+                dietsToShow.clear();
             });
 
             // Create and show the alert dialog
@@ -89,7 +111,7 @@ public class DietsChoosedFragment extends Fragment {
             dialog.show();
 
         });
-        initFirestore();
+
 
         return root;
     }
@@ -102,6 +124,7 @@ public class DietsChoosedFragment extends Fragment {
                 .setQuery(query, Diet.class)
                 .build();
         adapter = new DietsAdapter(options, getContext());
+        dietsReceived=options.getSnapshots();
         adapter.notifyDataSetChanged();
         diets_recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
         diets_recycler_view.setAdapter(adapter);

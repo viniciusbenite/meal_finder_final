@@ -7,7 +7,9 @@ public class Diet {
     public Diet(String diet) {
         this.diet = diet;
     }
-
+    public Diet(){
+        
+    }
     public String getDiet() {
         return diet;
     }
