@@ -1,163 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent">
-
-<LinearLayout
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/restaurant_name_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="25sp" />
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_height="wrap_content">
-    <RatingBar
-        android:id="@+id/restRating"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:saveEnabled="true"
-        android:numStars="5"/>
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textNoEvaluations"
+            android:id="@+id/restaurant_name_details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/restaurant_location_details"
-        android:layout_width="match_parent"
-        android:drawableStart="@drawable/ic_place"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp" />
-    <TextView
-        android:id="@+id/restaurant_timings"
-        android:layout_width="match_parent"
-        android:drawableStart="@drawable/ic_timings"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp" />
-
-    <ImageView
-        android:id="@+id/restaurant_image_details"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-         />
-
-    <TextView
-        android:id="@+id/restaurantDetailsText"
-        android:layout_width="match_parent"
-        android:textColor="#000000"
-        android:text="Details"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/restaurantAverageCostText"
-        android:layout_width="match_parent"
-        android:text="Average Cost for Two"
-        android:textColor="#000000"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/restaurantAverageCost"
-        android:layout_width="match_parent"
-        android:drawableLeft="@drawable/ic_price"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="19sp" />
-
-    <TextView
-        android:id="@+id/restaurantCuisinesText"
-        android:layout_width="match_parent"
-        android:text="Cuisines"
-        android:textColor="#000000"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/restaurantCuisines"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_food_log"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="19sp" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/restaurantReviewsText"
-        android:text="Reviews"
-        android:textColor="#000000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/addBtn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/button_shape_new_review"
-            android:padding="5dp"
-            android:text="Make a Review"
-            android:textColor="#ffffff" />
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <RatingBar
+                android:id="@+id/restRating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:numStars="5"
+                android:saveEnabled="true" />
+
+            <TextView
+                android:id="@+id/textNoEvaluations"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/restaurant_location_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableStart="@drawable/ic_place"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/restaurant_timings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableStart="@drawable/ic_timings"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/restaurant_image_details"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/image_details" />
+
+        <TextView
+            android:id="@+id/restaurantDetailsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/details"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/restaurantAverageCostText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/average_cost_for_two"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/restaurantAverageCost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableStart="@drawable/ic_price"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/restaurantCuisinesText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/cuisines"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/restaurantCuisines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:drawableStart="@drawable/ic_food_log"
+            android:textSize="19sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/restaurantReviewsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/reviews"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/button_shape_new_review"
+                android:padding="5dp"
+                android:text="@string/make_a_review"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_reviews"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
-
-</LinearLayout>
 </ScrollView>

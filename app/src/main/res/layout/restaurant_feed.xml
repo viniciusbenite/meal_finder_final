@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
             android:layout_height="100dp"
-            android:contentDescription="Restaurant Image" />
+            android:contentDescription="@string/restaurant_image" />
 
         <TextView
             android:id="@+id/Restaurant_Name"
@@ -41,5 +41,6 @@
         android:layout_width="wrap_content"
         android:background="@drawable/ic_favorite_border"
         android:layout_gravity="top|end"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_to_favorites" />
 </androidx.cardview.widget.CardView>

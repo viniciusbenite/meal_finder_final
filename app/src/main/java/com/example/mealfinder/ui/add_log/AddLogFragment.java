@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -101,7 +100,7 @@ public class AddLogFragment extends Fragment {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
 
-        takePictureButton.setOnClickListener(v -> takePicture(view));
+        takePictureButton.setOnClickListener(v -> takePicture());
 
         final DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
@@ -134,12 +133,7 @@ public class AddLogFragment extends Fragment {
 
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(AddLogFragment.this).navigate(R.id.new_log_to_logs);
-            }
-        });
+        cancel.setOnClickListener(v -> NavHostFragment.findNavController(AddLogFragment.this).navigate(R.id.new_log_to_logs));
         return view;
     }
 
@@ -220,9 +214,12 @@ public class AddLogFragment extends Fragment {
         }
     }
 
-    private void takePicture(View view) {
+    private void takePicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        file = FileProvider.getUriForFile(getContext(), getActivity().getApplicationContext().getPackageName() + ".provider", getOutputMediaFile());
+        file = FileProvider.getUriForFile(requireContext(),
+                requireActivity().getApplicationContext().getPackageName() + ".provider",
+                Objects.requireNonNull(getOutputMediaFile())
+        );
         intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
         startActivityForResult(intent, 100);
     }

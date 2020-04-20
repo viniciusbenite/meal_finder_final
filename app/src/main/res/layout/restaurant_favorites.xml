@@ -12,27 +12,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <ImageView
             android:id="@+id/Restaurant_Image_Favorites"
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:contentDescription="Restaurant Image" />
+            android:contentDescription="@string/restaurant_image"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/Restaurant_Name_Favorites"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/Restaurant_Location_Favorites"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            />
+            android:gravity="center" />
 
 
     </LinearLayout>
