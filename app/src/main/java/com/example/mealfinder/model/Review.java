@@ -5,6 +5,7 @@ public class Review {
     private String user;
     private String text;
     private int restaurantID;
+    private float rating;
 
     public Review() {
     }
@@ -13,6 +14,13 @@ public class Review {
         this.restaurantID = restaurantID;
         this.user = user;
         this.text = text;
+    }
+
+    public Review( int restaurantID,String user, String text, float rating) {
+        this.user = user;
+        this.text = text;
+        this.restaurantID = restaurantID;
+        this.rating = rating;
     }
 
     public String getUser() {
@@ -37,6 +45,14 @@ public class Review {
 
     public void setRestaurantID(int restaurantID) {
         this.restaurantID = restaurantID;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     @Override

@@ -109,8 +109,8 @@ public class RestaurantDetailsFragment extends Fragment {
         });
     }
 
-    private void postReview(int restaurant_id, String user, String text){
-        Review review = new Review(restaurant_id, user, text);
+    private void postReview(int restaurant_id, String user, String text, float rating){
+        Review review = new Review(restaurant_id, user, text, rating);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference userReviews = mFirestore.collection("users").document(uid).collection("reviews");
         CollectionReference allReviews = mFirestore.collection("reviews").document("reviews_doc").collection(String.valueOf(restaurant_id));
@@ -150,14 +150,16 @@ public class RestaurantDetailsFragment extends Fragment {
         CollectionReference usersRef = rootRef.collection("users");
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Enter your review");
-        final EditText input = new EditText(getContext());
-        builder.setView(input);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.make_review, null);
+        builder.setView(dialogLayout);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String user = usersRef.document(uid).getId();
-                String text = input.getText().toString();
-                postReview(restaurant_id, user, text);
+                String text = ((EditText)dialogLayout.findViewById(R.id.NewReviewText)).getText().toString();
+                float rating =((RatingBar)dialogLayout.findViewById(R.id.NewReviewRating)).getRating();
+                postReview(restaurant_id, user, text, rating);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

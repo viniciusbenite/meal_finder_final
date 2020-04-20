@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.mealfinder.R;
@@ -25,6 +26,8 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
     protected void onBindViewHolder(@NonNull ReviewAdapter.ReviewViewHolder holder, int position, @NonNull Review model) {
         holder.userNameReview.setText(model.getUser());
         holder.userCommentReview.setText(model.getText());
+        holder.ratingBar.setRating(model.getRating());
+
     }
 
     @NonNull
@@ -41,6 +44,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
         TextView userNameReview;
         TextView userCommentReview;
+        RatingBar ratingBar;
 
         ReviewViewHolder(View itemView) {
 
@@ -48,6 +52,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             mView = itemView;
             userNameReview = mView.findViewById(R.id.userNameReview);
             userCommentReview = mView.findViewById(R.id.userCommentReview);
+            ratingBar=mView.findViewById(R.id.userRating);
         }
     }
 }
