@@ -17,12 +17,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mealfinder.MainActivity;
 import com.example.mealfinder.R;
+import com.example.mealfinder.adapter.ReviewAdapter;
 import com.example.mealfinder.model.RestaurantDetails;
 import com.example.mealfinder.model.RestaurantInfo;
 import com.example.mealfinder.model.Review;
 import com.example.mealfinder.network.GetDataService;
 import com.example.mealfinder.network.RetrofitClientInstance;
 import com.example.mealfinder.adapter.ReviewsAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -40,6 +42,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,12 +60,9 @@ public class RestaurantDetailsFragment extends Fragment {
     TextView ratingVotes;
     String res_id;
     int restaurant_id;
+    RecyclerView restaurantReviews;
 
-    private List<String> listDataHeader = new ArrayList<>();
-    private HashMap<String, List<String>> listDataChild = new HashMap<>();
-
-    private ReviewsAdapter reviewsAdapter;
-    private ExpandableListView restaurantReviews;
+    private ReviewAdapter adapter;
 
     private FirebaseFirestore mFirestore;
 
@@ -77,7 +78,8 @@ public class RestaurantDetailsFragment extends Fragment {
         restaurantTiming=root.findViewById(R.id.restaurant_timings);
         restaurantCuisines=root.findViewById(R.id.restaurantCuisines);
         restaurantAverageForTwo=root.findViewById(R.id.restaurantAverageCost);
-        restaurantReviews = root.findViewById(R.id.expandableListView);
+        restaurantReviews = root.findViewById(R.id.recycler_view_reviews);
+
 
         initFirestore();
         Bundle bundle = this.getArguments();
@@ -129,37 +131,16 @@ public class RestaurantDetailsFragment extends Fragment {
     }
 
     private void getRestaurantReviews(int restaurant_id) {
-        List<String> review = new ArrayList<String>();
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         Query query = rootRef.collection("reviews").document("reviews_doc").collection(String.valueOf(restaurant_id)).whereEqualTo("restaurantID", restaurant_id);
-        Log.e("ASOKDP", String.valueOf(query));
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                Log.e("TAG", "TAG");
-                String reviewText = "";
-                String userName = "";
-                int counter = -1;
-                if (e != null) {
-                    Log.e("TAG", "Listen failed.", e);
-                    return;
-                }
-                assert queryDocumentSnapshots != null;
-                Log.e("Size of query", String.valueOf(queryDocumentSnapshots.size()));
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    Log.e("DATA", String.valueOf(doc.getData()));
-                    if (doc.get("text") != null && doc.get("user") != null) {
-                        reviewText = doc.getString("text");
-                        userName = doc.getString("user");
-                        review.add(reviewText);
-                    }
-                }
-                listDataHeader.add(userName);
-                listDataChild.put(listDataHeader.get(0), review);
-                reviewsAdapter = new ReviewsAdapter(getContext(), listDataHeader, listDataChild);
-                restaurantReviews.setAdapter(reviewsAdapter);
-            }
-        });
+        FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
+                .setQuery(query, Review.class)
+                .build();
+
+        adapter = new ReviewAdapter(options, getContext());
+        adapter.notifyDataSetChanged();
+        restaurantReviews.setLayoutManager(new LinearLayoutManager(getContext()));
+        restaurantReviews.setAdapter(adapter);
     }
 
     private void putData(RestaurantDetails restaurantDetails){
@@ -199,4 +180,17 @@ public class RestaurantDetailsFragment extends Fragment {
         });
         builder.show();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
 }
