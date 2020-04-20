@@ -42,13 +42,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/vegan_card_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp">
+            app:cardBackgroundColor="#FFFFFF"
+            style="@style/firstTimeMaterialCard">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -72,13 +67,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/vegetarian_card_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp">
+            style="@style/firstTimeMaterialCard"
+            app:cardBackgroundColor="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -103,13 +93,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/macrobiotic_card_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp">
+            style="@style/firstTimeMaterialCard"
+            app:cardBackgroundColor="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -133,13 +118,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/paleo_card_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp">
+            style="@style/firstTimeMaterialCard"
+            app:cardBackgroundColor="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="wrap_content"
