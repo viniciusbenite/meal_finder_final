@@ -14,7 +14,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
 import com.example.mealfinder.MainActivity;
 import com.example.mealfinder.R;
 import com.example.mealfinder.adapter.ReviewAdapter;
@@ -22,9 +21,7 @@ import com.example.mealfinder.model.RestaurantDetails;
 import com.example.mealfinder.model.Review;
 import com.example.mealfinder.network.GetDataService;
 import com.example.mealfinder.network.RetrofitClientInstance;
-
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,9 +29,9 @@ import com.google.firebase.firestore.Query;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,10 +48,10 @@ public class RestaurantDetailsFragment extends Fragment {
     TextView ratingVotes;
     String res_id;
     int restaurant_id;
+    RecyclerView restaurantReviews;
 
-    private RatingBar userRestaurantStars;
-    private RecyclerView restaurantReviews;
     private ReviewAdapter adapter;
+
     private FirebaseFirestore mFirestore;
 
 
@@ -70,7 +67,6 @@ public class RestaurantDetailsFragment extends Fragment {
         restaurantCuisines=root.findViewById(R.id.restaurantCuisines);
         restaurantAverageForTwo=root.findViewById(R.id.restaurantAverageCost);
         restaurantReviews = root.findViewById(R.id.recycler_view_reviews);
-        userRestaurantStars = root.findViewById(R.id.ratingBar);
 
 
         initFirestore();
@@ -86,6 +82,7 @@ public class RestaurantDetailsFragment extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // TODO Auto-generated method stub
                     showTextDialog(restaurant_id);
                 }
             });
@@ -127,6 +124,7 @@ public class RestaurantDetailsFragment extends Fragment {
         FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
                 .setQuery(query, Review.class)
                 .build();
+
         adapter = new ReviewAdapter(options, getContext());
         adapter.notifyDataSetChanged();
         restaurantReviews.setLayoutManager(new LinearLayoutManager(getContext()));

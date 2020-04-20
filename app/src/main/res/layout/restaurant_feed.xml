@@ -15,21 +15,21 @@
         <ImageView
             android:id="@+id/Restaurant_Image"
             android:layout_width="match_parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:layout_height="100dp"
             android:contentDescription="Restaurant Image" />
 
         <TextView
             android:id="@+id/Restaurant_Name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"
             />
         <TextView
             android:id="@+id/Restaurant_Location"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             />
 

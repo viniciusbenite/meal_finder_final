@@ -133,6 +133,13 @@ public class AddLogFragment extends Fragment {
             startActivityForResult(intent, ImageBack);
 
         });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddLogFragment.this).navigate(R.id.new_log_to_logs);
+            }
+        });
         return view;
     }
 
