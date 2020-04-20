@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<RestaurantList> call, Throwable t) {
-
+                Log.e("ERROR", String.valueOf(t));
             }
         });
 }
@@ -177,6 +177,26 @@ public class HomeFragment extends Fragment {
     }
     private void initFirestore() {
         mFirestore = FirebaseFirestore.getInstance();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    void requestLocationPermission() {
+        Log.e("Permission", Manifest.permission.ACCESS_FINE_LOCATION);
+        if (locationEnabled()) {
+            Log.e("location", "enabled");
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.e("bla", "blabla");
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                }, PackageManager.PERMISSION_GRANTED);
+                Log.e("Permission", Manifest.permission.ACCESS_FINE_LOCATION);
+                getLastLocation();
+            } else {
+                Log.d("Call to getLastLocation", "OK");
+                getLastLocation();
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -214,26 +234,6 @@ public class HomeFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-    void requestLocationPermission() {
-        Log.e("Permission", Manifest.permission.ACCESS_FINE_LOCATION);
-        if (locationEnabled()) {
-            Log.e("location", "enabled");
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.e("bla", "blabla");
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                }, PackageManager.PERMISSION_GRANTED);
-                Log.e("Permission", Manifest.permission.ACCESS_FINE_LOCATION);
-                getLastLocation();
-            } else {
-                Log.d("Call to getLastLocation", "OK");
-                getLastLocation();
-            }
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean checkPermissions() {
         return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
@@ -263,6 +263,7 @@ public class HomeFragment extends Fragment {
             }
     }
 
+    // If location == null, those 2 methods are invoked
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("MissingPermission")
     private void requestNewLocationData() {

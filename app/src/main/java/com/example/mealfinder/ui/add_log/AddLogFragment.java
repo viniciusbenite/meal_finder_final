@@ -1,21 +1,28 @@
 package com.example.mealfinder.ui.add_log;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -31,8 +38,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -48,7 +57,24 @@ public class AddLogFragment extends Fragment {
     private TextInputEditText date_log;
     private FirebaseFirestore mFirestore;
     private StorageReference folder;
+    private Uri imageData;
     private String picture;
+
+    private MaterialButton takePictureButton;
+    private Uri file;
+
+    private static File getOutputMediaFile() {
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "CameraDemo");
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_" + timeStamp + ".jpg");
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,10 +87,21 @@ public class AddLogFragment extends Fragment {
         chooseImage = view.findViewById(R.id.choose_photo);
         myCalendar = Calendar.getInstance();
         folder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
+
+
+        takePictureButton = view.findViewById(R.id.button_image);
+
         FirebaseFirestore.setLoggingEnabled(true);
         initFirestore();
         FirebaseFirestore.getInstance();
 
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Log.e("ERROR", "No permissions granted");
+            takePictureButton.setEnabled(false);
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+
+        takePictureButton.setOnClickListener(v -> takePicture(view));
 
         final DatePickerDialog.OnDateSetListener date = (view1, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
@@ -143,7 +180,44 @@ public class AddLogFragment extends Fragment {
                 Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
                 chooseImage.setImageBitmap(bitmap);
             }
+        } else if (requestCode == 100) {
+            Log.d("User option", "Take picture");
+            if (resultCode == RESULT_OK) {
+                chooseImage.setImageURI(file);
+//                file = data.getData();
+                final StorageReference imageName = folder.child("image" + file.getLastPathSegment());
+                imageName.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                picture = String.valueOf(uri);
+                            }
+                        });
+                    }
+                });
+            }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.d("Request permission", "OK");
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("Button enable", "OK");
+                takePictureButton.setEnabled(true);
+            }
+        }
+    }
+
+    private void takePicture(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        file = FileProvider.getUriForFile(getContext(), getActivity().getApplicationContext().getPackageName() + ".provider", getOutputMediaFile());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
+        startActivityForResult(intent, 100);
     }
 
 }

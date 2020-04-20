@@ -132,16 +132,26 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:textSize="18sp" />
+
         <Button
             android:id="@+id/addBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Make a Review"
             android:textColor="#ffffff"
-            app:backgroundTint="#000000"
-            android:text="Make a Review" />
+            app:backgroundTint="#000000" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            style="?android:attr/ratingBarStyleSmall"
+            android:id="@+id/ratingBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numStars="5"
+            android:rating="3"
+            android:stepSize="1" />
 
     </LinearLayout>
 
@@ -149,7 +159,6 @@
         android:id="@+id/recycler_view_reviews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 
 
 </LinearLayout>
