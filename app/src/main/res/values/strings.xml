@@ -17,5 +17,9 @@
     <string name="notifications">Notifications</string>
     <string name="sign_out">Sign Out</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="log_name">Log name</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="date_of_meal">Date of meal</string>
+    <string name="picture">Picture</string>
 
 </resources>

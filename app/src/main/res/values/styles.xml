@@ -9,6 +9,7 @@
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
 
         <item name="materialCardViewStyle">@style/CardView.AppTheme</item>
+        <item name="textInputStyle">@style/TextInputStyle</item>
     </style>
 
     <style name="CardView.AppTheme" parent="Widget.MaterialComponents.CardView">
@@ -42,5 +43,6 @@
         <item name="android:layout_marginBottom">16dp</item>
     </style>
 
+    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox" />
 
 </resources>
