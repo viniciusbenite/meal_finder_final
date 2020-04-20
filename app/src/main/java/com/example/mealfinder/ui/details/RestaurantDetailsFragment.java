@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,6 +49,11 @@ public class RestaurantDetailsFragment extends Fragment {
     ImageView restaurantImage;
     TextView restaurantName;
     TextView restaurantLocation;
+    TextView restaurantTiming;
+    TextView restaurantCuisines;
+    TextView restaurantAverageForTwo;
+    RatingBar ratingBar;
+    TextView ratingVotes;
     String res_id;
     int restaurant_id;
 
@@ -66,7 +72,13 @@ public class RestaurantDetailsFragment extends Fragment {
         restaurantImage=root.findViewById(R.id.restaurant_image_details);
         restaurantName=root.findViewById(R.id.restaurant_name_details);
         restaurantLocation=root.findViewById(R.id.restaurant_location_details);
+        ratingBar=root.findViewById(R.id.restRating);
+        ratingVotes=root.findViewById(R.id.textNoEvaluations);
+        restaurantTiming=root.findViewById(R.id.restaurant_timings);
+        restaurantCuisines=root.findViewById(R.id.restaurantCuisines);
+        restaurantAverageForTwo=root.findViewById(R.id.restaurantAverageCost);
         restaurantReviews = root.findViewById(R.id.expandableListView);
+
         initFirestore();
         Bundle bundle = this.getArguments();
         if(bundle != null) {
@@ -150,11 +162,17 @@ public class RestaurantDetailsFragment extends Fragment {
         });
     }
 
-    private void putData(RestaurantDetails restInfo){
-        ((MainActivity) getActivity()).setActionBarTitle(restInfo.getName());
-        Glide.with(getContext()).load(restInfo.getThumb()).into(restaurantImage);
-        restaurantName.setText(restInfo.getName());
-        restaurantLocation.setText(restInfo.getLocation().getLocality());
+    private void putData(RestaurantDetails restaurantDetails){
+        ((MainActivity) getActivity()).setActionBarTitle(restaurantDetails.getName());
+        Glide.with(getContext()).load(restaurantDetails.getThumb()).into(restaurantImage);
+        restaurantName.setText(restaurantDetails.getName());
+        ratingBar.setRating(Float.parseFloat(restaurantDetails.getUserRating().getAggregateRating()));
+        ratingVotes.setText(restaurantDetails.getUserRating().getVotes() + " votes");
+        restaurantLocation.setText(restaurantDetails.getLocation().getAddress());
+        restaurantTiming.setText(restaurantDetails.getTimings());
+        restaurantCuisines.setText(restaurantDetails.getCuisines());
+        restaurantAverageForTwo.setText(restaurantDetails.getAverageCostForTwo()+" "+restaurantDetails.getCurrency());
+
     }
 
     private void showTextDialog(int restaurant_id){

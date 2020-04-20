@@ -13,7 +13,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addDiet"
-        android:src="@drawable/ic_add_log"
-        style="@style/fabStyle" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:backgroundTint="#4285F4"
+        android:src="@android:drawable/ic_menu_add"
+         />
+<!-- style="@style/fabStyle" -->
 </FrameLayout>
