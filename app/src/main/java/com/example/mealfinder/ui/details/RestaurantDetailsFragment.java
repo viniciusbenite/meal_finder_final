@@ -9,41 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
 import com.example.mealfinder.MainActivity;
 import com.example.mealfinder.R;
 import com.example.mealfinder.adapter.ReviewAdapter;
 import com.example.mealfinder.model.RestaurantDetails;
-import com.example.mealfinder.model.RestaurantInfo;
 import com.example.mealfinder.model.Review;
 import com.example.mealfinder.network.GetDataService;
 import com.example.mealfinder.network.RetrofitClientInstance;
-import com.example.mealfinder.adapter.ReviewsAdapter;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,10 +51,10 @@ public class RestaurantDetailsFragment extends Fragment {
     TextView ratingVotes;
     String res_id;
     int restaurant_id;
-    RecyclerView restaurantReviews;
 
+    private RatingBar userRestaurantStars;
+    private RecyclerView restaurantReviews;
     private ReviewAdapter adapter;
-
     private FirebaseFirestore mFirestore;
 
 
@@ -79,6 +70,7 @@ public class RestaurantDetailsFragment extends Fragment {
         restaurantCuisines=root.findViewById(R.id.restaurantCuisines);
         restaurantAverageForTwo=root.findViewById(R.id.restaurantAverageCost);
         restaurantReviews = root.findViewById(R.id.recycler_view_reviews);
+        userRestaurantStars = root.findViewById(R.id.ratingBar);
 
 
         initFirestore();
@@ -94,7 +86,6 @@ public class RestaurantDetailsFragment extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO Auto-generated method stub
                     showTextDialog(restaurant_id);
                 }
             });
@@ -136,7 +127,6 @@ public class RestaurantDetailsFragment extends Fragment {
         FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
                 .setQuery(query, Review.class)
                 .build();
-
         adapter = new ReviewAdapter(options, getContext());
         adapter.notifyDataSetChanged();
         restaurantReviews.setLayoutManager(new LinearLayoutManager(getContext()));

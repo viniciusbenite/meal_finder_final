@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.mealfinder.R;
-import com.example.mealfinder.model.FoodLog;
 import com.example.mealfinder.model.Review;
+
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -17,10 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewViewHolder> {
 
-    private Context context;
     public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
         super(options);
-        this.context=context;
     }
 
     @Override
@@ -47,9 +45,9 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
         ReviewViewHolder(View itemView) {
 
             super(itemView);
-            mView=itemView;
-            userNameReview=mView.findViewById(R.id.userNameReview);
-            userCommentReview=mView.findViewById(R.id.userCommentReview);
+            mView = itemView;
+            userNameReview = mView.findViewById(R.id.userNameReview);
+            userCommentReview = mView.findViewById(R.id.userCommentReview);
         }
     }
 }
