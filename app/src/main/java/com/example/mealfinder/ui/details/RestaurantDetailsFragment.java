@@ -23,6 +23,7 @@ import com.example.mealfinder.network.GetDataService;
 import com.example.mealfinder.network.RetrofitClientInstance;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -110,7 +111,12 @@ public class RestaurantDetailsFragment extends Fragment {
     }
 
     private void postReview(int restaurant_id, String user, String text, float rating){
-        Review review = new Review(restaurant_id, user, text, rating);
+        //get current user to store the username in firestore
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        assert mFirebaseUser != null;
+        String mUsername = mFirebaseUser.getDisplayName();
+        Review review = new Review(restaurant_id, mUsername, text, rating);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference userReviews = mFirestore.collection("users").document(uid).collection("reviews");
         CollectionReference allReviews = mFirestore.collection("reviews").document("reviews_doc").collection(String.valueOf(restaurant_id));
@@ -145,6 +151,7 @@ public class RestaurantDetailsFragment extends Fragment {
     }
 
     private void showTextDialog(int restaurant_id){
+
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
         CollectionReference usersRef = rootRef.collection("users");
