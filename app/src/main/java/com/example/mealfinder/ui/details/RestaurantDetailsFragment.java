@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -19,28 +18,17 @@ import com.example.mealfinder.MainActivity;
 import com.example.mealfinder.R;
 import com.example.mealfinder.adapter.ReviewAdapter;
 import com.example.mealfinder.model.RestaurantDetails;
-import com.example.mealfinder.model.RestaurantInfo;
 import com.example.mealfinder.model.Review;
 import com.example.mealfinder.network.GetDataService;
 import com.example.mealfinder.network.RetrofitClientInstance;
-import com.example.mealfinder.adapter.ReviewsAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;

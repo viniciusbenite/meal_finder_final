@@ -117,6 +117,13 @@ public class AddLogFragment extends Fragment {
 
             }
         });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(AddLogFragment.this).navigate(R.id.new_log_to_logs);
+            }
+        });
         return view;
     }
     private void updateLabel() {
