@@ -53,7 +53,7 @@ public class FirstTimeUsers extends AppCompatActivity {
             final int finalI = i;
             cardView.setOnClickListener(v -> {
                 if (cardView.getCardBackgroundColor().getDefaultColor() == -1) {
-                    cardView.setCardBackgroundColor(Color.parseColor("#0F9D58"));
+                    cardView.setCardBackgroundColor(getColor(R.color.colorPrimary));
                     if (finalI == 0) {
                         diets.add(new Diet("Vegan"));
                     } else if (finalI == 1) {
@@ -64,7 +64,7 @@ public class FirstTimeUsers extends AppCompatActivity {
                         diets.add(new Diet("Paleo"));
                     }
                 } else {
-                    cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                    cardView.setCardBackgroundColor(Color.WHITE);
                     if (finalI == 0) {
                         diets.remove(new Diet("Vegan"));
                     } else if (finalI == 1) {

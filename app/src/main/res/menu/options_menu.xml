@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/search"
-        android:title="Search"
         android:icon="@drawable/ic_search"
-        app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+        android:title="@string/search_hint"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
 
-    <item android:id="@+id/notifications"
-        android:title="Notifications"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_notifications">
-    </item>
+    <item
+        android:id="@+id/notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/sign_out_menu"
-        android:title="Sign Out"
-        app:showAsAction="never"/>
+        android:title="@string/sign_out"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/dark_mode"
+        android:icon="@drawable/ic_brightness"
+        android:title="@string/dark_mode"
+        app:showAsAction="collapseActionView|ifRoom" />
 
 </menu>
