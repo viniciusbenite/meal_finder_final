@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean firstTime = mPreferences.getBoolean("firstTime", true);
+        boolean firstTime = mPreferences.getBoolean("firstTimeV5", true);
         Log.d("firstTime", ""+firstTime);
         if (firstTime) {
             SharedPreferences.Editor editor = mPreferences.edit();
-            editor.putBoolean("firstTime", false);
+            editor.putBoolean("firstTimeV5", false);
             editor.apply();
             startActivity(new Intent(this, FirstTimeUsers.class));
         }

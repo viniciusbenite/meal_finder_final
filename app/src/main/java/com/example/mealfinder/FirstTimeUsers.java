@@ -21,7 +21,7 @@ import java.util.Set;
 public class FirstTimeUsers extends AppCompatActivity {
     MaterialButton submit;
     // Has to be a set so the values don't repeat
-    Set<Diet> diets = new HashSet<>();
+    Set<String> diets = new HashSet<>();
     GridLayout gridLayout;
     private FirebaseFirestore mFirestore;
 
@@ -38,8 +38,8 @@ public class FirstTimeUsers extends AppCompatActivity {
             //save to firestore the diets
             String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             CollectionReference diets_collection = mFirestore.collection("users").document(uid).collection("diets");
-            for (Diet diet : diets)
-                diets_collection.add(diet);
+            for (String s : diets)
+                diets_collection.add(new Diet(s));
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -55,24 +55,24 @@ public class FirstTimeUsers extends AppCompatActivity {
                 if (cardView.getCardBackgroundColor().getDefaultColor() == -1) {
                     cardView.setCardBackgroundColor(getColor(R.color.colorPrimary));
                     if (finalI == 0) {
-                        diets.add(new Diet("Vegan"));
+                        diets.add("Vegan");
                     } else if (finalI == 1) {
-                        diets.add(new Diet("Vegetarian"));
+                        diets.add("Vegetarian");
                     } else if (finalI == 2) {
-                        diets.add(new Diet("Macrobiotic"));
+                        diets.add("Macrobiotic");
                     } else if (finalI == 3) {
-                        diets.add(new Diet("Paleo"));
+                        diets.add("Paleo");
                     }
                 } else {
                     cardView.setCardBackgroundColor(Color.WHITE);
                     if (finalI == 0) {
-                        diets.remove(new Diet("Vegan"));
+                        diets.remove("Vegan");
                     } else if (finalI == 1) {
-                        diets.remove(new Diet("Vegetarian"));
+                        diets.remove("Vegetarian");
                     } else if (finalI == 2) {
-                        diets.remove(new Diet("Macrobiotic"));
+                        diets.remove("Macrobiotic");
                     } else if (finalI == 3) {
-                        diets.remove(new Diet("Paleo"));
+                        diets.remove("Paleo");
                     }
                 }
             });
